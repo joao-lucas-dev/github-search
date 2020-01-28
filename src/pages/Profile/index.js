@@ -1,61 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { MdPeople, MdLocationOn, MdInbox, MdStar } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
-import api from '../../services/api';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
 export default function Profile({ location }) {
-  const { data } = location.state;
+  const { dataUser, dataRepo } = location.state;
 
-  const [repos, setRepos] = useState([]);
-
-  useEffect(() => {
-    async function loadRepos() {
-      const response = await api.get(`/users/${data.login}/repos`);
-
-      setRepos(
-        response.data.sort(
-          (prev, next) => prev.stargazers_count < next.stargazers_count
-        )
-      );
-    }
-
-    loadRepos();
-  });
   return (
     <Container>
-      <aside>
-        <img src={data.avatar_url} alt={data.name} />
-        <span>@{data.login}</span>
+      <header>
+        <Link to="/">
+          <span>
+            <strong>GitHub</strong> Search
+          </span>
+        </Link>
+        <input value={dataUser.login} readOnly />
+      </header>
 
-        <ul>
-          <li>
-            <MdLocationOn size={18} color="#fff" />
-            {data.location}
-          </li>
-          <li>
-            <MdInbox size={18} color="#fff" /> {data.public_repos}
-          </li>
-          <li>
-            <MdPeople size={18} color="#fff" /> {data.followers}
-          </li>
-        </ul>
-      </aside>
+      <Content>
+        <aside>
+          <img src={dataUser.avatar_url} alt={dataUser.name} />
 
-      <main>
-        <ul>
-          {repos.map(repo => (
-            <li key={repo.key}>
-              {repo.name}
-              <span>
-                <MdStar size={15} color="#fff" /> {repo.stargazers_count}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </main>
+          <div>
+            <span>@{dataUser.login}</span>
+            <p>{dataUser.bio}</p>
+
+            <ul>
+              <li>
+                <MdLocationOn size={18} color="#fff" />
+                {dataUser.location}
+              </li>
+              <li>
+                <MdInbox size={18} color="#fff" /> {dataUser.public_repos}
+              </li>
+              <li>
+                <MdPeople size={18} color="#fff" /> {dataUser.followers}
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <main>
+          <ul>
+            {dataRepo.map(repo => (
+              <li key={repo.key}>
+                {repo.name}
+                <span>
+                  <MdStar size={15} color="#fff" /> {repo.stargazers_count}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </main>
+      </Content>
     </Container>
   );
 }

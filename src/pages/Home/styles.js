@@ -1,5 +1,5 @@
 import { darken } from 'polished';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 export const Container = styled.div`
   height: 100%;
@@ -21,7 +21,18 @@ export const Container = styled.div`
   }
 `;
 
-export const Form = styled.form`
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const Form = styled.form.attrs(props => ({
+  disabled: props.loading,
+}))`
   display: flex;
   flex-direction: column;
 
@@ -40,6 +51,14 @@ export const Form = styled.form`
     }
   }
 
+  ${props =>
+    props.loading &&
+    css`
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
+    `}
+
   button {
     width: 234px;
     height: 38px;
@@ -51,6 +70,11 @@ export const Form = styled.form`
 
     &:hover {
       background: ${darken(0.05, '#56588c')};
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 `;
