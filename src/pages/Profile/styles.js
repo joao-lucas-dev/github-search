@@ -13,6 +13,10 @@ export const Container = styled.div`
     justify-content: center;
     margin-bottom: 55px;
 
+    @media (max-width: 840px) {
+      flex-direction: column;
+    }
+
     span {
       font-size: 20px;
       color: #fff;
@@ -37,8 +41,8 @@ export const Container = styled.div`
         opacity: 0.6;
       }
 
-      @media (max-width: 410px) {
-        display: none;
+      @media (max-width: 840px) {
+        margin-top: 20px;
       }
     }
   }
@@ -56,7 +60,7 @@ export const Content = styled.div`
   }
 
   aside {
-    width: 298px;
+    width: 238px;
     background: #2e2f45;
     color: #fff;
     border-radius: 5px;
@@ -92,8 +96,8 @@ export const Content = styled.div`
       ul {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        padding-left: 60px;
+        text-align: center;
 
         li {
           display: flex;
@@ -109,29 +113,33 @@ export const Content = styled.div`
   }
 
   main {
+    width: 100%;
     display: flex;
+    align-items: center;
     margin-left: 20px;
     color: #fff;
 
     ul {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       grid-gap: 20px;
 
-      @media (max-width: 1320px) {
+      @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 840px) {
         grid-template-columns: 1fr;
       }
 
       li {
-        width: 300px;
         background: #2e2f45;
-        border-radius: 5px;
-        padding: 15px;
+        border-radius: 4px;
+        padding: 20px;
 
         span {
           display: flex;
           align-items: center;
-
           margin-top: 5px;
 
           svg {

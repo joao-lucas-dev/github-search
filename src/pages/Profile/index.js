@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Container, Content } from './styles';
 
 export default function Profile({ location }) {
-  const { dataUser, dataRepo } = location.state;
+  const { dataUser, dataRepos } = location.state;
 
   return (
     <Container>
@@ -31,7 +31,7 @@ export default function Profile({ location }) {
             <ul>
               <li>
                 <MdLocationOn size={18} color="#fff" />
-                {dataUser.location}
+                {dataUser.location || 'Sem localização'}
               </li>
               <li>
                 <MdInbox size={18} color="#fff" /> {dataUser.public_repos}
@@ -45,8 +45,8 @@ export default function Profile({ location }) {
 
         <main>
           <ul>
-            {dataRepo.map(repo => (
-              <li key={repo.key}>
+            {dataRepos.map(repo => (
+              <li key={repo.id}>
                 {repo.name}
                 <span>
                   <MdStar size={15} color="#fff" /> {repo.stargazers_count}

@@ -1,43 +1,22 @@
 import React, { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
-import PropTypes from 'prop-types';
-
-import api from '../../services/api';
+import { isSearchingRequest } from '../../store/modules/search/actions';
 import { Container, Form } from './styles';
 
-export default function Home({ history }) {
+export default function Home() {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   async function handleFindUser(e) {
     e.preventDefault();
 
     setLoading(true);
 
-    try {
-      if (!username) {
-        toast.warn('Username não preenchido!');
-        setLoading(false);
-        return;
-      }
-
-      const responseUser = await api.get(`/users/${username}`);
-      const responseRepos = await api.get(`/users/${username}/repos`);
-
-      history.push('/profile', {
-        dataUser: responseUser.data,
-        dataRepo: responseRepos.data.sort(
-          (prev, next) => prev.stargazers_count < next.stargazers_count
-        ),
-      });
-
-      setLoading(false);
-    } catch (err) {
-      toast.error('Usuário não encontrado!');
-      setLoading(false);
-    }
+    dispatch(isSearchingRequest(username, setLoading));
   }
 
   return (
@@ -49,6 +28,7 @@ export default function Home({ history }) {
       <Form loading={loading} onSubmit={handleFindUser}>
         <input
           value={username}
+          autoCapitalize="none"
           onChange={e => setUsername(e.target.value)}
           placeholder="Insira seu username"
         />
@@ -60,9 +40,3 @@ export default function Home({ history }) {
     </Container>
   );
 }
-
-Home.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
