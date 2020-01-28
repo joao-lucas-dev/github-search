@@ -1,8 +1,8 @@
+import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   height: 100%;
-  background: #242435;
 
   display: flex;
   flex-direction: column;
@@ -47,5 +47,10 @@ export const Form = styled.form`
     background: #56588c;
     color: #fff;
     border-radius: 5px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${darken(0.05, '#56588c')};
+    }
   }
 `;
