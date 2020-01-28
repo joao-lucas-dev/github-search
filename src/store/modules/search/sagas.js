@@ -4,7 +4,6 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import api from '../../../services/api';
 import history from '../../../services/history';
-import { newDevSuccess } from '../dev/actions';
 import { isSearchingSuccess } from './actions';
 
 export function* searching({ payload }) {
@@ -20,15 +19,12 @@ export function* searching({ payload }) {
     const responseUser = yield call(api.get, `/users/${username}`);
     const responseRepos = yield call(api.get, `/users/${username}/repos`);
 
-    yield put(isSearchingSuccess());
-    yield put(
-      newDevSuccess(
-        responseUser.data,
-        responseRepos.data.sort((a, b) =>
-          a.stargazers_count > b.stargazers_count ? -1 : 1
-        )
-      )
+    const dataUser = responseUser.data;
+    const dataRepos = responseRepos.data.sort((a, b) =>
+      a.stargazers_count > b.stargazers_count ? -1 : 1
     );
+
+    yield put(isSearchingSuccess(dataUser, dataRepos));
 
     history.push('/profile');
   } catch (err) {
