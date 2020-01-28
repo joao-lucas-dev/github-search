@@ -34,7 +34,11 @@ export default function Profile() {
         </Link>
 
         <Form loading={loading} onSubmit={handleFindUser}>
-          <input value={username} onChange={e => setUsername(e.target.value)} />
+          <input
+            autoCapitalize="none"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
 
           <button type="submit">
             {loading ? <FaSpinner color="#FFF" size={14} /> : 'Procurar'}
@@ -48,12 +52,12 @@ export default function Profile() {
 
           <div>
             <span>@{dataUser.login}</span>
-            <p>{dataUser.bio}</p>
+            <p>{dataUser.bio || 'sem bio'}</p>
 
             <ul>
               <li>
                 <MdLocationOn size={18} color="#fff" />
-                {dataUser.location || 'Sem localização'}
+                {dataUser.location || 'sem localização'}
               </li>
               <li>
                 <MdInbox size={18} color="#fff" /> {dataUser.public_repos}
