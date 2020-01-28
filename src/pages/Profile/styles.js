@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { darken } from 'polished';
+import styled, { keyframes, css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -26,26 +27,71 @@ export const Container = styled.div`
         font-style: normal;
       }
     }
+  }
+`;
 
-    input {
-      width: 234px;
-      height: 38px;
-      border: 0;
-      background: #2e2f45;
-      padding: 0 15px;
-      color: #fff;
-      border-radius: 5px;
-      margin-left: 15px;
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
-      &::placeholder {
-        opacity: 0.6;
-      }
+export const Form = styled.form.attrs(props => ({
+  disabled: props.loading,
+}))`
+  @media (max-width: 840px) {
+    display: flex;
+    flex-direction: column;
+  }
 
-      @media (max-width: 840px) {
-        margin-top: 20px;
-      }
+  input {
+    width: 234px;
+    height: 38px;
+    border: 0;
+    background: #2e2f45;
+    padding: 0 15px;
+    color: #fff;
+    border-radius: 5px;
+    margin: 0 15px;
+
+    &::placeholder {
+      opacity: 0.6;
+    }
+
+    @media (max-width: 840px) {
+      margin: 20px 0 10px;
     }
   }
+
+  button {
+    width: 234px;
+    height: 38px;
+    border: 0;
+    background: #56588c;
+    color: #fff;
+    border-radius: 5px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${darken(0.05, '#56588c')};
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  ${props =>
+    props.loading &&
+    css`
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
+    `}
 `;
 
 export const Content = styled.div`

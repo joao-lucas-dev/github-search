@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
 import { MdPeople, MdLocationOn, MdInbox, MdStar } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
+import { newDevRequest } from '../../store/modules/dev/actions';
+import { Container, Form, Content } from './styles';
 
-import { Container, Content } from './styles';
+export default function Profile() {
+  const dataUser = useSelector(state => state.dev.dataUser);
+  const dataRepos = useSelector(state => state.dev.dataRepos);
 
-export default function Profile({ location }) {
-  const { dataUser, dataRepos } = location.state;
+  const [username, setUsername] = useState(dataUser.login);
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  async function handleFindUser(e) {
+    e.preventDefault();
+
+    setLoading(true);
+
+    dispatch(newDevRequest(username, setLoading));
+  }
 
   return (
     <Container>
@@ -17,7 +32,14 @@ export default function Profile({ location }) {
             <strong>GitHub</strong> Search
           </span>
         </Link>
-        <input value={dataUser.login} readOnly />
+
+        <Form loading={loading} onSubmit={handleFindUser}>
+          <input value={username} onChange={e => setUsername(e.target.value)} />
+
+          <button type="submit">
+            {loading ? <FaSpinner color="#FFF" size={14} /> : 'Procurar'}
+          </button>
+        </Form>
       </header>
 
       <Content>
@@ -59,9 +81,3 @@ export default function Profile({ location }) {
     </Container>
   );
 }
-
-Profile.propTypes = {
-  location: PropTypes.shape({
-    state: PropTypes.object,
-  }).isRequired,
-};

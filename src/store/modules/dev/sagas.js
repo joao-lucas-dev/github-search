@@ -3,11 +3,9 @@ import { toast } from 'react-toastify';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import api from '../../../services/api';
-import history from '../../../services/history';
-import { newDevSuccess } from '../dev/actions';
-import { isSearchingSuccess } from './actions';
+import { newDevSuccess } from './actions';
 
-export function* searching({ payload }) {
+export function* newDev({ payload }) {
   const { username, setLoading } = payload;
 
   try {
@@ -20,7 +18,6 @@ export function* searching({ payload }) {
     const responseUser = yield call(api.get, `/users/${username}`);
     const responseRepos = yield call(api.get, `/users/${username}/repos`);
 
-    yield put(isSearchingSuccess());
     yield put(
       newDevSuccess(
         responseUser.data,
@@ -30,11 +27,11 @@ export function* searching({ payload }) {
       )
     );
 
-    history.push('/profile');
+    setLoading(false);
   } catch (err) {
     toast.error('Usuário não encontrado!');
     setLoading(false);
   }
 }
 
-export default all([takeLatest('@search/IS_SEARCHING_REQUEST', searching)]);
+export default all([takeLatest('@dev/NEW_DEV_REQUEST', newDev)]);
