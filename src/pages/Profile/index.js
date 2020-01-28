@@ -60,10 +60,16 @@ export default function Profile() {
                 {dataUser.location || 'sem localização'}
               </li>
               <li>
-                <MdInbox size={18} color="#fff" /> {dataUser.public_repos}
+                <MdInbox size={18} color="#fff" /> {dataUser.public_repos}{' '}
+                repositórios
               </li>
               <li>
-                <MdPeople size={18} color="#fff" /> {dataUser.followers}
+                <MdPeople size={18} color="#fff" /> {dataUser.followers}{' '}
+                seguidores
+              </li>
+              <li>
+                <MdPeople size={18} color="#fff" /> {dataUser.following}{' '}
+                seguindos
               </li>
             </ul>
           </div>
