@@ -61,5 +61,7 @@ export default function Profile({ location }) {
 }
 
 Profile.propTypes = {
-  location: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.object,
+  }).isRequired,
 };
