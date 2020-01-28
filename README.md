@@ -2,7 +2,7 @@
   <img src="./photos/demo.gif" />
 </h1>
 
-<h1 align="center">Rocketshoes</h1>
+<h1 align="center">GitHub Search</h1>
 
 <h3 align="center"> This is a study project about search devs profile of GitHub :books:</h3>
 
