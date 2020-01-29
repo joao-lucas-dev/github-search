@@ -69,7 +69,7 @@ export default function Profile() {
               </li>
               <li>
                 <MdPeople size={18} color="#fff" /> {dataUser.following}{' '}
-                seguindos
+                seguindo
               </li>
             </ul>
           </div>
