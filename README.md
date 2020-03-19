@@ -24,7 +24,7 @@ This project features all the latest tools and practices in front-end developmen
 
 ## 💻 Project
 
-This is a study project about animations with layout of C6 Bank :books:
+This is a study project about search devs profile of GitHub :books:
 
 ## :camera: Images
 
